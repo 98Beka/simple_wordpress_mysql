@@ -19,9 +19,9 @@ skip-networking = false              	        \n\
 " > /etc/mysql/my.cnf
 
 RUN echo -e "\
-echo \"CREATE DATABASE wordpress;\" | mysql                                  \n\
-echo \"CREATE USER 'admin'@'localhost' IDENTIFIED BY 'admin';\" | mysql  	 \n\
-echo \"GRANT ALL PRIVILEGES ON wordpress.* TO admin IDENTIFIED BY 'admin';\" | mysql \n\
+echo \"CREATE DATABASE wordpress;\" | mysql                                             \n\
+echo \"CREATE USER 'admin'@'localhost' IDENTIFIED BY 'admin';\" | mysql  	            \n\
+echo \"GRANT ALL PRIVILEGES ON wordpress.* TO admin IDENTIFIED BY 'admin';\" | mysql    \n\
 " > /db_creat.sh
 RUN chmod +x db_creat.sh
 
@@ -34,7 +34,7 @@ rc-service mariadb start                        \n\
 RUN chmod +x /run.sh
 VOLUME ["/var/lib/mysql"]  
 
-# #SELECT User, Host, Password FROM mysql.user;
+#SELECT User, Host, Password FROM mysql.user;
 
 #                 #wordpress
 ######################################################
@@ -52,5 +52,5 @@ COPY wp-config.php /www/wordpress/wp-config.php
 
 EXPOSE 5050
 
-CMD    /run.sh; /db_creat.sh;  php -S 0.0.0.0:5050 -t www/wordpress/
-#CMD sh
+# CMD    /run.sh; /db_creat.sh;  php -S 0.0.0.0:5050 -t www/wordpress/
+CMD sh
