@@ -29,12 +29,13 @@ RUN echo -e "\
 #!/bin/sh              					        \n\
 /etc/init.d/mariadb setup				        \n\
 rc-service mariadb start                        \n\
-# mysql < conf.sql           			        \n\
+./db_creat.sh           			            \n\
+php -S 0.0.0.0:5050 -t www/wordpress/           \n\
 " > /run.sh
 RUN chmod +x /run.sh
 VOLUME ["/var/lib/mysql"]  
 
-#SELECT User, Host, Password FROM mysql.user;
+#SELECT User, Host, Password FROM mysql.user; //check users for first make comand -'mysql -u root -p' or just -'mysql'
 
 #                 #wordpress
 ######################################################
@@ -51,6 +52,4 @@ RUN rm -rf /www/wordpress/wp-config.php
 COPY wp-config.php /www/wordpress/wp-config.php
 
 EXPOSE 5050
-
-# CMD    /run.sh; /db_creat.sh;  php -S 0.0.0.0:5050 -t www/wordpress/
-CMD sh
+CMD /run.sh
